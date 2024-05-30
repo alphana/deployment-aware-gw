@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dummy-box-deployment
+  namespace: ns1
+  labels:
+    app: dummy-box-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: dummy-box-deployment
+  template:
+    metadata:
+      name: dummy-box-deployment
+      labels:
+        app: dummy-box-deployment
+    spec:
+      containers:
+        - name: dummy-box-deployment
+          image: dummy-box
+          imagePullPolicy: IfNotPresent
+      restartPolicy: Always
+      

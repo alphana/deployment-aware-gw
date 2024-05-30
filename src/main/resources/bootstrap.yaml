@@ -1,0 +1,11 @@
+spring:
+  cloud:
+    kubernetes:
+      discovery:
+        all-namespaces: false
+        namespaces:
+          - ns1
+        enabled: true
+      loadbalancer:
+        enabled: false
+        mode: service
