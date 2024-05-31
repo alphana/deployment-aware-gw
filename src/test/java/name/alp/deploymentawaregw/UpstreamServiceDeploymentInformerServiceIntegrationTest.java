@@ -4,6 +4,7 @@ package name.alp.deploymentawaregw;
 import io.fabric8.kubernetes.api.model.apps.Deployment;
 import io.fabric8.kubernetes.client.KubernetesClient;
 import io.fabric8.kubernetes.client.server.mock.KubernetesServer;
+import name.alp.deploymentawaregw.upstreamchangeaware.UpstreamServiceDeploymentInformerService;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -17,10 +18,10 @@ import static org.junit.jupiter.api.Assertions.*;
 @TestPropertySource(properties = {
         "spring.cloud.kubernetes.enabled=false" // Disable real Kubernetes client for tests
 })
-public class DeploymentInformerServiceIntegrationTest {
+public class UpstreamServiceDeploymentInformerServiceIntegrationTest {
 
-    @Autowired
-    private DeploymentInformerService deploymentInformerService;
+//    @Autowired
+    private UpstreamServiceDeploymentInformerService upstreamServiceDeploymentInformerService;
 
     // Kubernetes server for mocking Kubernetes API
     private static KubernetesServer server;
@@ -48,11 +49,11 @@ public class DeploymentInformerServiceIntegrationTest {
 
         // When
         // Add your test logic here
-        // For example, trigger some action that should result in an event being received by DeploymentInformerService
+        // For example, trigger some action that should result in an event being received by UpstreamServiceDeploymentInformerService
 
         // Then
-        // Add assertions to verify the behavior of DeploymentInformerService
-        assertNotNull(deploymentInformerService);
+        // Add assertions to verify the behavior of UpstreamServiceDeploymentInformerService
+        assertNotNull(upstreamServiceDeploymentInformerService);
         // Add more assertions as needed
     }
 
@@ -67,7 +68,7 @@ public class DeploymentInformerServiceIntegrationTest {
         client.apps().deployments().inNamespace("default").create(deployment);
 
         // Then
-        // Verify that DeploymentInformerService receives the deployment addition event
+        // Verify that UpstreamServiceDeploymentInformerService receives the deployment addition event
 //        assertNotNull(deploymentInformerService.getDeployment("test-deployment"));
     }
 
@@ -86,7 +87,7 @@ public class DeploymentInformerServiceIntegrationTest {
         client.apps().deployments().inNamespace("default").createOrReplace(deployment);
 
         // Then
-        // Verify that DeploymentInformerService receives the deployment modification event
+        // Verify that UpstreamServiceDeploymentInformerService receives the deployment modification event
 //        assertEquals(2, deploymentInformerService.getDeployment("test-deployment").getSpec().getReplicas());
     }
 
@@ -104,7 +105,7 @@ public class DeploymentInformerServiceIntegrationTest {
         client.apps().deployments().inNamespace("default").withName("test-deployment").delete();
 
         // Then
-        // Verify that DeploymentInformerService receives the deployment deletion event
+        // Verify that UpstreamServiceDeploymentInformerService receives the deployment deletion event
 //        assertNull(deploymentInformerService.getDeployment("test-deployment"));
     }
 

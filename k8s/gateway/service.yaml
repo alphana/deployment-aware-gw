@@ -1,13 +1,15 @@
 apiVersion: v1
-kind: Pod
+kind: Service
 metadata:
-  name: $Title$
-  labels:
-    app: $Title$
+  name: gateway-service
+  namespace: ns1
 spec:
-  containers:
-    - name: $Title$
-      image: $Image$
-      imagePullPolicy: IfNotPresent
-  restartPolicy: Always
-  $END$
+  selector:
+    app: gateway-app
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080
+      name: http
+#      nodePort: 30080
+  type: LoadBalancer

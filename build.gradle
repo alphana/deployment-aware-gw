@@ -27,11 +27,31 @@ ext {
 
 dependencies {
     implementation 'org.springframework.cloud:spring-cloud-starter-gateway'
+
+    implementation 'org.springframework.cloud:spring-cloud-starter-kubernetes-fabric8'
+    implementation 'org.springframework.cloud:spring-cloud-starter-kubernetes-fabric8-loadbalancer'
+
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+
+    //observablity
+    implementation 'io.micrometer:micrometer-tracing-bridge-otel'
+    implementation 'io.opentelemetry:opentelemetry-exporter-otlp'
+
+//    implementation 'io.micrometer:micrometer-registry-prometheus'
+
+    runtimeOnly 'io.micrometer:micrometer-registry-prometheus'
+    runtimeOnly 'io.micrometer:micrometer-registry-otlp'
+
+
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
+
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'io.projectreactor:reactor-test'
+    testImplementation 'io.fabric8:kubernetes-server-mock:6.12.1'
+
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+
 }
 
 dependencyManagement {

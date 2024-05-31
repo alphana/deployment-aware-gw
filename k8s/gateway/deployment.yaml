@@ -1,13 +1,33 @@
-apiVersion: v1
-kind: Pod
+apiVersion: apps/v1
+kind: Deployment
 metadata:
-  name: $Title$
-  labels:
-    app: $Title$
+  name: gateway-deployment
+  namespace: ns1
 spec:
-  containers:
-    - name: $Title$
-      image: $Image$
-      imagePullPolicy: IfNotPresent
-  restartPolicy: Always
-  $END$
+  replicas: 1
+  selector:
+    matchLabels:
+      app: gateway-app
+  template:
+    metadata:
+      labels:
+        app: gateway-app
+    spec:
+      serviceAccountName: gateway-service-account
+      containers:
+        - name: gateway-container
+          image: docker.io/library/deployment-aware-gw:0.0.1-SNAPSHOT
+          ports:
+            - containerPort: 8080
+          env:
+            - name: APP_KUBE_CLIENT_CLIENT_NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
+            - name: APP_KUBE_CLIENT_USERNAME
+              value: gateway-service-account
+#      volumes:
+#        - name: kube-root-ca.crt
+#          configMap:
+#            defaultMode: 420
+#            name: kube-root-ca.crt

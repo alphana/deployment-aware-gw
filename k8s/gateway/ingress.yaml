@@ -1,21 +1,22 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: gw-ingress
+  name: gateway-ingress
   namespace: ns1
   annotations:
-    nginx.ingress.kubernetes.io/rewrite-target: /
+    nginx.ingress.kubernetes.io/use-regex: "true"
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
 spec:
   ingressClassName: nginx
   rules:
     - http:
         paths:
-          - path: /gateway
-            pathType: Prefix
+          - path: /gateway(/|$)(.*)
+            pathType: ImplementationSpecific
             backend:
               service:
                 name: gateway-service
                 port:
                   number: 8080
-      host: gateway.kube.local
+#      host: gateway.kube.loc
                 

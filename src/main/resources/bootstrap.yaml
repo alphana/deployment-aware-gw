@@ -6,6 +6,6 @@ spring:
         namespaces:
           - ns1
         enabled: true
-      loadbalancer:
-        enabled: false
-        mode: service
+#      loadbalancer:
+#        enabled: false
+#        mode: service

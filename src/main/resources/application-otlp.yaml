@@ -1,78 +1,28 @@
-logging:
-  level:
-#    org.springframework.cloud.kubernetes: debug
-    org.springframework.cloud.gateway: trace
-    org.springframework.cloud.gateway.discovery: trace
-
-spring:
-  application:
-    name: deployment-aware-gw
-  cloud:
-    gateway:
-      discovery:
-
-        locator:
-          enabled: true
-
-    kubernetes:
-      discovery:
-        namespaces:
-          - ns1
-        enabled: true
-        all-namespaces: false
-
-        catalogServicesWatchDelay: 3000
-#spring:
-#  cloud:
-#    kubernetes:
-#      discovery:
-#        all-namespaces: false
-#        namespaces:
-#          - ns1
-#        enabled: true
-#      loadbalancer:
-#        enabled: false
-#        mode: service
-
-
-
-management.endpoint.gateway.enabled: true
-#management.endpoints.web.exposure.include=gateway
 management:
-
-
   endpoints:
     web:
       exposure:
-        include: '*'
-
-
-  metrics:
-    distribution:
-      percentiles-histogram:
-        all: 'true'
-        http:
-          server:
-            requests: 'true'
-  info:
-    env:
-      enabled: 'true'
-    os:
-      enabled: 'true'
-    java:
-      enabled: 'true'
+        include: "*"
   endpoint:
     health:
-      probes:
-        enabled: 'true'
-      show-details: always
       show-components: always
-    env:
-      show-values: always
-    configprops:
-      show-values: always
-  prometheus:
+      show-details: always
+
+  # Generic OpenTelemetry configuration (partially shared between metrics and traces)
+  opentelemetry:
+    resource-attributes:
+      application: ${spring.application.name}
+      cluster: local
+      # Micrometer Metrics configures this attribute with "unknown value".
+      # It should probably be autoconfigured correctly by Spring Boot.
+      "service.name": ${spring.application.name}
+
+  otlp:
+  # Traces-specific OpenTelemetry configuration
+    tracing:
+      endpoint: http://otlp14268.kube.local/v1/traces
+  # Metrics-specific OpenTelemetry configuration
     metrics:
       export:
-        step: 10s
-        descriptions: true
+        url: http://otlp8888.kube.local/api/v1/otlp
+        step: 5s

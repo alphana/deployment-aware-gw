@@ -1,5 +1,5 @@
-package name.alp.deploymentawaregw;
+package name.alp.deploymentawaregw.upstreamchangeaware;
 
 public enum UpstreamServiceChangedEventTypes {
-    UPDATE_INPROGRESS, UPDATE_FINISHED, UPDATE_STARTED
+    UPDATE_IN_PROGRESS, UPDATE_FINISHED, UPDATE_STARTED
 }
